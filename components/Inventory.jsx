@@ -11,7 +11,7 @@ const Inventory = () => {
   const [open, setOpen] = useState(false);
   const [itemName, setItemName] = useState("");
   const [quantity, setQuantity] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const updateInventory = async () => {
     const snapshot = query(collection(firestore, "inventory"));
@@ -156,6 +156,15 @@ const Inventory = () => {
       </Button>
 
       <Stack width="50%" direction="row" spacing={2}>
+        <Autocomplete
+          disablePortal
+          required
+          options={categories}
+          sx={{ width: "100%" }}
+          value={selectedCategory}
+          onChange={(event, newValue) => setSelectedCategory(newValue)}
+          renderInput={(params) => (<TextField {...params} label="Category" required />)}
+        />
         <TextField
           variant="outlined"
           fullWidth
